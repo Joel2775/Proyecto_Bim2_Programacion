@@ -49,7 +49,7 @@ int main (){
         cout << "Seleccione una opcion: ";
         cin >> opcion;
         if (opcion == 1) {
-            agergar_usuario(usuarios);
+            agregar_usuario(usuarios);
         }else if (opcion == 2) {
             cout << "falta";
         }else if (opcion == 3) {
