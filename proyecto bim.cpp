@@ -31,12 +31,38 @@ void agregar_usuario() {
     listaUsuarios.push_back(nuevoUsuario);
 }
 
+
+void actualizarUsuario(){
+	int id;
+	cout<<"Ingrese el Id del usuario a Actualizar:";
+	cin>> id;
+	
+	for (auto& usuario : listaUsuarios){
+		if (usuario.id == id){
+			cout<<"Ingrese los nuevo datos:\n";
+			cin.ignore();		
+			cout<<"Nuevo Nombre de Usuario: ";
+			getline(cin, usuario.nombre);
+
+			cout<<"Nuevo Juego del Usuario: ";
+			getline(cin, usuario.juego);
+			
+			cout<<"Nuevo Nivel: ";
+			cin>>usuario.nivel;
+			
+            cout << "Usuario actualizado exitosamente\n";
+            return;
+		}
+	}
+	cout << "El Usuario no fue encontrado\n";
+}
+
 void leer_Usuarios() {
     if (listaUsuarios.empty()) {
-        cout << "no hay usuarios registrados";
+        cout << "\n No hay usuarios registrados";
     }else{
         for (const auto& usuario : listaUsuarios) {
-            cout << "### lista de usuarios registrados ###\n";
+            cout << "### Lista de usuarios registrados ###\n";
             cout << usuario.id << ", " << usuario.nombre << ", " <<usuario.juego << ", " << usuario.nivel << endl;
         }
     }
@@ -59,7 +85,7 @@ int main (){
         }else if (opcion == 2) {
             cout << "falta";
         }else if (opcion == 3) {
-            cout << "falta";
+            actualizarUsuario();
         }else if (opcion == 4) {
             cout << "falta";
         }else if (opcion == 5) {
