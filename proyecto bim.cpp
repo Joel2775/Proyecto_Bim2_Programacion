@@ -9,30 +9,36 @@ struct Usuarios {
     int nivel;
 };
 
-vector<Usuarios> usuarios;
+vector<Usuarios> listaUsuarios;
 
-void agregar_usuario(vector<Usuarios>& usuarios) {
+void agregar_usuario() {
     Usuarios nuevoUsuario;
     cout << "Ingrese el ID del usuario: ";
     cin >> nuevoUsuario.id;
-    for (const auto& usuario : usuarios) {
+    for (const auto& usuario : listaUsuarios) {
         if (nuevoUsuario.id == usuario.id) {
             cout << "el usuario ya existe";
             return;
         }
     }
+    cin.ignore();
     cout << "Ingrese el nombre del usuario: ";
-    cin >> nuevoUsuario.nombre;
+    getline(cin, nuevoUsuario.nombre);
     cout << "Ingrese el juego del usuario: ";
-    cin >> nuevoUsuario.juego;
+    getline(cin, nuevoUsuario.juego);
     cout << "Ingrese el nivel del usuario: ";
     cin >> nuevoUsuario.nivel;
-    usuarios.push_back(nuevoUsuario);
+    listaUsuarios.push_back(nuevoUsuario);
 }
 
-void leer_Usuarios(vector<Usuarios>& usuarios) {
-    for (const auto& usuario : usuarios) {
-        cout << usuario.id << " | " << usuario.nombre << " | " <<usuario.juego << " | " << usuario.nivel << endl;
+void leer_Usuarios(vector<Usuarios>& listaUsuarios) {
+    if (listaUsuarios.empty()) {
+        cout << "no hay usuarios registrados";
+    }else{
+        for (const auto& usuario : listaUsuarios) {
+            cout << "### lista de usuarios registrados ###\n";
+            cout << usuario.id << ", " << usuario.nombre << ", " <<usuario.juego << ", " << usuario.nivel << endl;
+        }
     }
 }
 
@@ -49,7 +55,7 @@ int main (){
         cout << "Seleccione una opcion: ";
         cin >> opcion;
         if (opcion == 1) {
-            agregar_usuario(usuarios);
+            agregar_usuario();
         }else if (opcion == 2) {
             cout << "falta";
         }else if (opcion == 3) {
@@ -57,7 +63,7 @@ int main (){
         }else if (opcion == 4) {
             cout << "falta";
         }else if (opcion == 5) {
-            leer_Usuarios(usuarios);
+            leer_Usuarios();
         }else if (opcion == 6) {
             cout << "saliendo";
             break;
