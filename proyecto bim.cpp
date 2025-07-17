@@ -31,7 +31,7 @@ void agregar_usuario() {
     listaUsuarios.push_back(nuevoUsuario);
 }
 
-void leer_Usuarios(vector<Usuarios>& listaUsuarios) {
+void leer_Usuarios() {
     if (listaUsuarios.empty()) {
         cout << "no hay usuarios registrados";
     }else{
