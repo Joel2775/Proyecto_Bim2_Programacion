@@ -31,6 +31,23 @@ void agregar_usuario() {
     listaUsuarios.push_back(nuevoUsuario);
 }
 
+void buscar_usuario() {
+    int id;
+    cout << "Ingrese el ID del usuario a buscar: ";
+    cin >> id;
+
+    for (const auto& usuario : listaUsuarios) {
+        if (usuario.id == id) {
+            cout << "Usuario encontrado:\n";
+            cout << "ID: " << usuario.id << endl;
+            cout << "Nombre: " << usuario.nombre << endl;
+            cout << "Juego: " << usuario.juego << endl;
+            cout << "Nivel: " << usuario.nivel << endl;
+            return;
+        }
+    }
+    cout << "Usuario no encontrado\n";
+}
 
 void actualizarUsuario(){
 	int id;
@@ -83,7 +100,7 @@ int main (){
         if (opcion == 1) {
             agregar_usuario();
         }else if (opcion == 2) {
-            cout << "falta";
+            buscar_usuario();
         }else if (opcion == 3) {
             actualizarUsuario();
         }else if (opcion == 4) {
