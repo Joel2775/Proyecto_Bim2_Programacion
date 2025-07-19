@@ -74,6 +74,21 @@ void actualizarUsuario(){
 	cout << "El Usuario no fue encontrado\n";
 }
 
+void eliminar_usuario() {
+    int id;
+    cout << "Digite el ID del jugador a eliminar: ";
+    cin >> id;
+
+    for (size_t i = 0; i < listaUsuarios.size(); ++i) {
+        if (listaUsuarios[i].id == id) {
+            listaUsuarios.erase(listaUsuarios.begin() + i);
+            cout << "El juagdor a sido eliminado con exito\n";
+            return;
+        }
+    }
+    cout << "Jugador no encontrado.\n";
+}
+
 void leer_Usuarios() {
     if (listaUsuarios.empty()) {
         cout << "\n No hay usuarios registrados";
@@ -104,7 +119,7 @@ int main (){
         }else if (opcion == 3) {
             actualizarUsuario();
         }else if (opcion == 4) {
-            cout << "falta";
+            eliminar_usuario();
         }else if (opcion == 5) {
             leer_Usuarios();
         }else if (opcion == 6) {
