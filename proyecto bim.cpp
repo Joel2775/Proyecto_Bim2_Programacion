@@ -1,7 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <string>
 
 using namespace std;
+
 struct Usuarios {
     int id;
     string nombre;
@@ -10,15 +13,47 @@ struct Usuarios {
 };
 
 vector<Usuarios> listaUsuarios;
+string  ruta = "usuarios.txt";
 
-void agregar_usuario() {
+vector<Usuarios> cargar_usuarios(){
+    vector<Usuarios> usuarios;
+    ifstream archivo(ruta);
+    if(!archivo){
+        cerr<<"Archivo no encontrado. Se iniciará una nueva lista.\n";
+        return usuarios;
+    }
+    string linea;
+    while(getline(archivo,linea)){
+        Usuarios c;
+        int pos = 0;
+        int campo = 0;
+        string token;
+        while((pos = linea.find('|')) != string::npos){
+            token = linea.substr(0,pos); 
+            if(campo == 0){
+                c.id = stoi(token);
+            }else if (campo == 1){
+                c.nombre = token;
+            }else if(campo == 2){
+                c.juego = token;
+            }
+            linea.erase(0, pos+1);
+            campo++;
+        }
+        c.nivel = stof(linea);
+        usuarios.push_back(c);
+    }
+    return usuarios;
+}
+
+Usuarios agregar_usuario() {
     Usuarios nuevoUsuario;
     cout << "Ingrese el ID del usuario: ";
     cin >> nuevoUsuario.id;
     for (const auto& usuario : listaUsuarios) {
         if (nuevoUsuario.id == usuario.id) {
             cout << "el usuario ya existe";
-            return;
+            return {};
         }
     }
     cin.ignore();
@@ -28,7 +63,18 @@ void agregar_usuario() {
     getline(cin, nuevoUsuario.juego);
     cout << "Ingrese el nivel del usuario: ";
     cin >> nuevoUsuario.nivel;
-    listaUsuarios.push_back(nuevoUsuario);
+    return nuevoUsuario;
+}
+
+void guardar_usuario(){
+    ofstream archivo(ruta);
+    if(!archivo){
+        cerr<<"Error al abrir el archivo para guardar.\n";
+        return;
+    }
+    for(const auto& c: listaUsuarios) {
+        archivo << c.id<<"|"<<c.nombre<<"|"<<c.juego<<"|"<<c.nivel<<"\n";
+    }
 }
 
 void buscar_usuario() {
@@ -93,14 +139,15 @@ void leer_Usuarios() {
     if (listaUsuarios.empty()) {
         cout << "\n No hay usuarios registrados";
     }else{
+	cout << "### Lista de usuarios registrados ###\n";
         for (const auto& usuario : listaUsuarios) {
-            cout << "### Lista de usuarios registrados ###\n";
             cout << usuario.id << ", " << usuario.nombre << ", " <<usuario.juego << ", " << usuario.nivel << endl;
         }
     }
 }
 
 int main (){
+    listaUsuarios = cargar_usuarios();
     while (true) {
         int opcion;
         cout << "\n--- MENU USUARIOS DE VIDEOJUEGOS ---\n";
@@ -113,7 +160,11 @@ int main (){
         cout << "Seleccione una opcion: ";
         cin >> opcion;
         if (opcion == 1) {
-            agregar_usuario();
+            Usuarios nuevoUsuario = agregar_usuario();
+            if (nuevoUsuario.id != 0) {
+                listaUsuarios.push_back(nuevoUsuario);
+                guardar_usuario();
+            }
         }else if (opcion == 2) {
             buscar_usuario();
         }else if (opcion == 3) {
