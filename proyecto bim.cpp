@@ -82,19 +82,46 @@ void buscar_usuario() {
     cout << "Ingrese el ID del usuario a buscar: ";
     cin >> id;
 
-    for (const auto& usuario : listaUsuarios) {
-        if (usuario.id == id) {
+    ifstream archivo("usuarios.txt");
+    if (!archivo) {
+        cerr << "No se pudo abrir el archivo usuarios.txt\n";
+        return;
+    }
+
+    string linea;
+    while (getline(archivo, linea)) {
+        Usuarios c;
+        int pos = 0;
+        int campo = 0;
+        string token;
+
+        while ((pos = linea.find('|')) != string::npos) {
+            token = linea.substr(0, pos);
+            if (campo == 0) {
+                c.id = stoi(token);
+            } else if (campo == 1) {
+                c.nombre = token;
+            } else if (campo == 2) {
+                c.juego = token;
+            }
+            linea.erase(0, pos + 1);
+            campo++;
+        }
+
+        c.nivel = stoi(linea);
+
+        if (c.id == id) {
             cout << "Usuario encontrado:\n";
-            cout << "ID: " << usuario.id << endl;
-            cout << "Nombre: " << usuario.nombre << endl;
-            cout << "Juego: " << usuario.juego << endl;
-            cout << "Nivel: " << usuario.nivel << endl;
+            cout << "ID: " << c.id << endl;
+            cout << "Nombre: " << c.nombre << endl;
+            cout << "Juego: " << c.juego << endl;
+            cout << "Nivel: " << c.nivel << endl;
             return;
         }
     }
+
     cout << "Usuario no encontrado\n";
 }
-
 void actualizarUsuario(){
 	int id;
 	cout<<"Ingrese el Id del usuario a Actualizar:";
