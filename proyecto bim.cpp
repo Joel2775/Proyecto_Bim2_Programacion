@@ -122,29 +122,43 @@ void buscar_usuario() {
 
     cout << "Usuario no encontrado\n";
 }
-void actualizarUsuario(){
+
+void actualizar_usuario(){
+	
+    if (listaUsuarios.empty()) {
+        cout<< "No hay usuarios registrados\n";
+        return;
+    }
+    
 	int id;
 	cout<<"Ingrese el Id del usuario a Actualizar:";
 	cin>> id;
 	
+	bool encontrado = false;
+	
 	for (auto& usuario : listaUsuarios){
-		if (usuario.id == id){
-			cout<<"Ingrese los nuevo datos:\n";
-			cin.ignore();		
+		if(usuario.id == id){
+			encontrado = true;
+			cout<<"Usuario Encontrado. Ingrese los nuevo datos:\n";
+			cin.ignore();
+			
 			cout<<"Nuevo Nombre de Usuario: ";
 			getline(cin, usuario.nombre);
-
+			
 			cout<<"Nuevo Juego del Usuario: ";
 			getline(cin, usuario.juego);
 			
 			cout<<"Nuevo Nivel: ";
 			cin>>usuario.nivel;
 			
+			guardar_usuario();
             cout << "Usuario actualizado exitosamente\n";
-            return;
+            break;
 		}
+	}	
+	if(!encontrado){
+		cout<<"El Usuario no fue encontrado\n";
 	}
-	cout << "El Usuario no fue encontrado\n";
 }
 
 void eliminar_usuario() {
@@ -195,7 +209,7 @@ int main (){
         }else if (opcion == 2) {
             buscar_usuario();
         }else if (opcion == 3) {
-            actualizarUsuario();
+            actualizar_usuario();
         }else if (opcion == 4) {
             eliminar_usuario();
         }else if (opcion == 5) {
