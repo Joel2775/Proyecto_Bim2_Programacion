@@ -2,12 +2,22 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <vector>
+#include <string>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
+
+// Definimos la estructura
+struct Usuarios {
+    int id;
+    std::string nombre;
+    std::string juego;
+    int nivel;
+};
 
 class MainWindow : public QMainWindow
 {
@@ -18,6 +28,7 @@ public:
     ~MainWindow();
 
 private slots:
+//ya se define con la creacion de la interface
     void on_boton_registrar_clicked();
 
     void on_boton_modificar_clicked();
@@ -30,5 +41,11 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+//definimos las funciones
+    std::vector<Usuarios> cargar_usuarios();
+    Usuarios agregar_usuario();
+    void guardar_usuario();
+    void leer_Usuarios();
 };
 #endif // MAINWINDOW_H
