@@ -74,6 +74,19 @@ Usuarios MainWindow::agregar_usuario() {
     return nuevoUsuario;
 }
 
+void MainWindow::guardar_usuario() {
+    ofstream archivo(ruta);
+    if (!archivo) {
+        cerr << "Error al abrir el archivo para guardar." << endl;
+        return;
+    }
+
+    for (const auto& c : listaUsuarios) {
+        archivo << c.id << "|" << c.nombre << "|" << c.juego << "|" << c.nivel << "\n";
+    }
+    ui->mostrar->setText(QString::fromStdString("usuario ingreado correctamente"));
+}
+
 void MainWindow::leer_Usuarios() {
     ui->tabla_registros->setRowCount(0); // limpia la tabla
 
