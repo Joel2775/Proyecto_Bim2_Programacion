@@ -74,9 +74,37 @@ Usuarios MainWindow::agregar_usuario() {
     return nuevoUsuario;
 }
 
+void MainWindow::leer_Usuarios() {
+    ui->tabla_registros->setRowCount(0); // limpia la tabla
+
+    int fila = 0;
+
+    if (listaUsuarios.empty()) {
+        cout << "No hay usuarios registrados.\n";
+        return;
+    }
+    cout << "\n--- Lista de Usuarios ---\n";
+    for (const auto& c : listaUsuarios) {
+
+        ui->tabla_registros->insertRow(fila); //insertar una nueva fila
+
+        ui->tabla_registros->setItem(fila, 0, new QTableWidgetItem(QString::number(c.id)));
+        ui->tabla_registros->setItem(fila, 1, new QTableWidgetItem(QString::fromStdString(c.nombre)));
+        ui->tabla_registros->setItem(fila, 2, new QTableWidgetItem(QString::fromStdString(c.juego)));
+        ui->tabla_registros->setItem(fila, 3, new QTableWidgetItem(QString::number(c.nivel)));
+
+        fila++;
+    }
+}
+
 void MainWindow::on_boton_registrar_clicked()
 {
-
+    Usuarios nuevoUsuario = agregar_usuario();
+    if (nuevoUsuario.id != 0) {
+        listaUsuarios.push_back(nuevoUsuario);
+        guardar_usuario();
+        leer_Usuarios();
+    }
 }
 
 
@@ -101,6 +129,6 @@ void MainWindow::on_boton_buscar_clicked()
 
 void MainWindow::on_boton_mostrar_clicked()
 {
-
+    leer_Usuarios();
 }
 
