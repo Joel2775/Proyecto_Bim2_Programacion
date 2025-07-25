@@ -169,6 +169,7 @@ void eliminar_usuario() {
     for (size_t i = 0; i < listaUsuarios.size(); ++i) {
         if (listaUsuarios[i].id == id) {
             listaUsuarios.erase(listaUsuarios.begin() + i);
+	    guardar_usuario();
             cout << "El juagdor a sido eliminado con exito\n";
             return;
         }
