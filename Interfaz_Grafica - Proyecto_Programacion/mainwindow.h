@@ -16,7 +16,7 @@ struct Usuarios {
     int id;
     std::string nombre;
     std::string juego;
-    int nivel;
+    double nivel;
 };
 
 class MainWindow : public QMainWindow
@@ -47,5 +47,6 @@ private:
     Usuarios agregar_usuario();
     void guardar_usuario();
     void leer_Usuarios();
+    void actualizar_usuario();
 };
 #endif // MAINWINDOW_H
