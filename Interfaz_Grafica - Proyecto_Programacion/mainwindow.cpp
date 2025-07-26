@@ -69,7 +69,7 @@ Usuarios MainWindow::agregar_usuario() {
 
     nuevoUsuario.nombre = ui->digitar_nombre->text().toStdString();
     nuevoUsuario.juego = ui->digitar_juego->text().toStdString();
-    nuevoUsuario.nivel = ui->digitar_nivel->text().toInt();
+    nuevoUsuario.nivel = ui->digitar_nivel->text().toDouble();
 
     return nuevoUsuario;
 }
@@ -110,6 +110,34 @@ void MainWindow::leer_Usuarios() {
     }
 }
 
+void MainWindow::actualizar_usuario(){
+
+    int id;
+    id = ui->digitar_id->text().toInt();
+
+    bool encontrado = false;
+
+    for (auto& usuario : listaUsuarios){
+        if(usuario.id == id){
+            encontrado = true;
+            ui->mostrar->setText(QString::fromStdString("Usuario Encontrado"));
+
+            usuario.nombre = ui->digitar_nombre->text().toStdString();
+
+            usuario.juego = ui->digitar_juego->text().toStdString();
+
+            usuario.nivel = ui->digitar_nivel->text().toDouble();
+
+            guardar_usuario();
+            break;
+        }
+    }
+    ui->mostrar->setText(QString::fromStdString("Usuario Modificado correctamente"));
+    if(!encontrado){
+        ui->mostrar->setText(QString::fromStdString("El Usuario no fue encontrado"));
+    }
+}
+
 void MainWindow::on_boton_registrar_clicked()
 {
     Usuarios nuevoUsuario = agregar_usuario();
@@ -123,7 +151,8 @@ void MainWindow::on_boton_registrar_clicked()
 
 void MainWindow::on_boton_modificar_clicked()
 {
-
+    actualizar_usuario();
+    leer_Usuarios();
 }
 
 
