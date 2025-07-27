@@ -138,6 +138,52 @@ void MainWindow::actualizar_usuario(){
     }
 }
 
+void MainWindow::buscar_usuario() {
+    int id = ui->digitar_id->text().toInt();
+
+    ifstream archivo(ruta);
+    if (!archivo) {
+        ui->mostrar->setText("No se pudo abrir el archivo usuarios.txt");
+        return;
+    }
+
+    string linea;
+    while (getline(archivo, linea)) {
+        Usuarios c;
+        int pos = 0;
+        int campo = 0;
+        string token;
+
+        while ((pos = linea.find('|')) != string::npos) {
+            token = linea.substr(0, pos);
+            if (campo == 0) {
+                c.id = stoi(token);
+            } else if (campo == 1) {
+                c.nombre = token;
+            } else if (campo == 2) {
+                c.juego = token;
+            }
+            linea.erase(0, pos + 1);
+            campo++;
+        }
+
+        c.nivel = stof(linea);
+
+        if (c.id == id) {
+            QString resultado = "Usuario encontrado:\n";
+            resultado += "ID: " + QString::number(c.id) + "\n";
+            resultado += "Nombre: " + QString::fromStdString(c.nombre) + "\n";
+            resultado += "Juego: " + QString::fromStdString(c.juego) + "\n";
+            resultado += "Nivel: " + QString::number(c.nivel);
+
+            ui->mostrar->setText(resultado);
+            return;
+        }
+    }
+
+    ui->mostrar->setText("Usuario no encontrado");
+}
+
 void MainWindow::on_boton_registrar_clicked()
 {
     Usuarios nuevoUsuario = agregar_usuario();
