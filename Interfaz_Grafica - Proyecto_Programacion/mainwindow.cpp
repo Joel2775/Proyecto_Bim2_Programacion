@@ -226,13 +226,14 @@ void MainWindow::on_boton_modificar_clicked()
 
 void MainWindow::on_boton_eliminar_clicked()
 {
-    buscar_usuario();
+    eliminar_usuario();
+    leer_Usuarios();
 }
 
 
 void MainWindow::on_boton_buscar_clicked()
 {
-
+    buscar_usuario();
 }
 
 
