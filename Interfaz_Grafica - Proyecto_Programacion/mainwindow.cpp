@@ -138,6 +138,21 @@ void MainWindow::actualizar_usuario(){
     }
 }
 
+void MainWindow::eliminar_usuario()
+{
+    int id = ui->digitar_id->text().toInt();
+
+    for (size_t i = 0; i < listaUsuarios.size(); ++i) {
+        if (listaUsuarios[i].id == id){
+            listaUsuarios.erase(listaUsuarios.begin()+i);
+            guardar_usuario();
+            ui->mostrar->setText("El juagdor ha sido eliminado con exito\n");
+            return;
+        }
+    }
+    ui->mostrar->setText("Jugador no encontrado");
+}
+
 void MainWindow::buscar_usuario() {
     int idBuscado = ui->digitar_id->text().toInt();
     if (idBuscado == 0) {
