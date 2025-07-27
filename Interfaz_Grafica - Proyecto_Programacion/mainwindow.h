@@ -48,6 +48,7 @@ private:
     void guardar_usuario();
     void leer_Usuarios();
     void actualizar_usuario();
+    void eliminar_usuario();
     void buscar_usuario();
 };
 #endif // MAINWINDOW_H
