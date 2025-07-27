@@ -139,7 +139,11 @@ void MainWindow::actualizar_usuario(){
 }
 
 void MainWindow::buscar_usuario() {
-    int id = ui->digitar_id->text().toInt();
+    int idBuscado = ui->digitar_id->text().toInt();
+    if (idBuscado == 0) {
+        ui->mostrar->setText("Por favor, ingrese un ID válido.");
+        return;
+    }
 
     ifstream archivo(ruta);
     if (!archivo) {
@@ -148,6 +152,9 @@ void MainWindow::buscar_usuario() {
     }
 
     string linea;
+    bool encontrado = false;
+    ui->tabla_registros->setRowCount(0);
+
     while (getline(archivo, linea)) {
         Usuarios c;
         int pos = 0;
@@ -156,32 +163,32 @@ void MainWindow::buscar_usuario() {
 
         while ((pos = linea.find('|')) != string::npos) {
             token = linea.substr(0, pos);
-            if (campo == 0) {
-                c.id = stoi(token);
-            } else if (campo == 1) {
-                c.nombre = token;
-            } else if (campo == 2) {
-                c.juego = token;
-            }
+            if (campo == 0) c.id = stoi(token);
+            else if (campo == 1) c.nombre = token;
+            else if (campo == 2) c.juego = token;
             linea.erase(0, pos + 1);
             campo++;
         }
 
-        c.nivel = stof(linea);
+        c.nivel = stoi(linea);
 
-        if (c.id == id) {
-            QString resultado = "Usuario encontrado:\n";
-            resultado += "ID: " + QString::number(c.id) + "\n";
-            resultado += "Nombre: " + QString::fromStdString(c.nombre) + "\n";
-            resultado += "Juego: " + QString::fromStdString(c.juego) + "\n";
-            resultado += "Nivel: " + QString::number(c.nivel);
+        if (c.id == idBuscado) {
+            int fila = ui->tabla_registros->rowCount();
+            ui->tabla_registros->insertRow(fila);
+            ui->tabla_registros->setItem(fila, 0, new QTableWidgetItem(QString::number(c.id)));
+            ui->tabla_registros->setItem(fila, 1, new QTableWidgetItem(QString::fromStdString(c.nombre)));
+            ui->tabla_registros->setItem(fila, 2, new QTableWidgetItem(QString::fromStdString(c.juego)));
+            ui->tabla_registros->setItem(fila, 3, new QTableWidgetItem(QString::number(c.nivel)));
 
-            ui->mostrar->setText(resultado);
-            return;
+            ui->mostrar->setText("Usuario encontrado");
+            encontrado = true;
+            break;
         }
     }
 
-    ui->mostrar->setText("Usuario no encontrado");
+    if (!encontrado) {
+        ui->mostrar->setText("Usuario no encontrado");
+    }
 }
 
 void MainWindow::on_boton_registrar_clicked()
@@ -204,7 +211,7 @@ void MainWindow::on_boton_modificar_clicked()
 
 void MainWindow::on_boton_eliminar_clicked()
 {
-
+    buscar_usuario();
 }
 
 
