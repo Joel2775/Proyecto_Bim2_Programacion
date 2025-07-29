@@ -192,8 +192,8 @@ void MainWindow::buscar_usuario() {
             ui->tabla_registros->insertRow(fila);
             ui->tabla_registros->setItem(fila, 0, new QTableWidgetItem(QString::number(c.id)));
             ui->tabla_registros->setItem(fila, 1, new QTableWidgetItem(QString::fromStdString(c.nombre)));
-            ui->tabla_registros->setItem(fila, 2, new QTableWidgetItem(QString::number(c.nivel)));
-            ui->tabla_registros->setItem(fila, 3, new QTableWidgetItem(QString::fromStdString(c.juego)));
+            ui->tabla_registros->setItem(fila, 2, new QTableWidgetItem(QString::fromStdString(c.juego)));
+            ui->tabla_registros->setItem(fila, 3, new QTableWidgetItem(QString::number(c.nivel)));
 
 
             ui->mostrar->setText("Usuario encontrado");
@@ -207,6 +207,15 @@ void MainWindow::buscar_usuario() {
     }
 }
 
+void MainWindow::on_boton_registrar_clicked()
+{
+    Usuarios nuevoUsuario = agregar_usuario();
+    if (nuevoUsuario.id != 0) {
+        listaUsuarios.push_back(nuevoUsuario);
+        guardar_usuario();
+        leer_Usuarios();
+    }
+}
 
 void MainWindow::on_boton_modificar_clicked()
 {
