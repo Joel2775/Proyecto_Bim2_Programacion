@@ -24,11 +24,11 @@ MainWindow::~MainWindow()
 }
 
 std::vector<Usuarios> MainWindow::cargar_usuarios() {
-    vector<Usuarios> usuarios;
+    //vector<Usuarios> usuarios;
     ifstream archivo(ruta);
     if (!archivo) {
         cerr << "Archivo no encontrado. Se iniciará una nueva lista.\n";
-        return usuarios;
+        return listaUsuarios;
     }
 
     string linea;
@@ -51,9 +51,9 @@ std::vector<Usuarios> MainWindow::cargar_usuarios() {
             campo++;
         }
         c.nivel = stof(linea);
-        usuarios.push_back(c);
+        listaUsuarios.push_back(c);
     }
-    return usuarios;
+    return listaUsuarios;
 }
 
 Usuarios MainWindow::agregar_usuario() {
