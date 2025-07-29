@@ -231,7 +231,7 @@
       <x>30</x>
       <y>311</y>
       <width>731</width>
-      <height>221</height>
+      <height>231</height>
      </rect>
     </property>
     <attribute name="horizontalHeaderCascadingSectionResizes">
@@ -268,7 +268,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Nivel</string>
+      <string>Videojuego</string>
      </property>
      <property name="font">
       <font>
@@ -278,7 +278,7 @@
     </column>
     <column>
      <property name="text">
-      <string>VideoJuego</string>
+      <string>Nivel</string>
      </property>
      <property name="font">
       <font>
