@@ -7,8 +7,8 @@
 
 using namespace std;
 
-std::vector<Usuarios> listaUsuarios;
-std::string ruta = "usuarios.txt";
+vector<Usuarios> listaUsuarios;
+string ruta = "usuarios.txt";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-std::vector<Usuarios> MainWindow::cargar_usuarios() {
+vector<Usuarios> MainWindow::cargar_usuarios() {
     //vector<Usuarios> usuarios;
     ifstream archivo(ruta);
     if (!archivo) {
